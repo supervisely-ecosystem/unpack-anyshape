@@ -6,7 +6,11 @@
   ],
   "description": "Convert \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
   "docker_image": "docker.deepsystems.io/supervisely/five/base-py-sdk-internal:apps",
-  "main_script": "src/rasterize_objects_on_images.py",
+  "main_script": "src/unpack_anyshape.py",
+  "modal_template": "src/modal.html",
+  "modal_template_state": {
+    "remove": true
+  },
   "task_location": "workspace_tasks",
   "isolate": true,
   "icon": "https://img.icons8.com/nolan/96/separate-document.png",
@@ -16,6 +20,5 @@
   "context_menu": {
     "target": ["images_project"],
     "context_category": "Converter"
-  },
-  "context_category": "Converter"
+  }
 }

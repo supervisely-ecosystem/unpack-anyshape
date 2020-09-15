@@ -12,7 +12,6 @@ REMOVE_ORIGINAL_CLASS = bool(os.environ['modal.state.remove'])
 @my_app.callback("do")
 @sly.timeit
 def do(**kwargs):
-    raise ValueError("MK error")
     api = sly.Api.from_env()
 
     # read source project

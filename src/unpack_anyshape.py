@@ -18,8 +18,8 @@ def do(**kwargs):
     src_project = api.project.get_info_by_id(PROJECT_ID)
 
     if src_project.type != str(sly.ProjectType.IMAGES):
-        raise RuntimeError("Project {!r} has type {!r}. App works only with type {!r}"
-                           .format(src_project.name, src_project.type, sly.ProjectType.IMAGES))
+        raise Exception("Project {!r} has type {!r}. App works only with type {!r}"
+                        .format(src_project.name, src_project.type, sly.ProjectType.IMAGES))
 
     src_project_meta_json = api.project.get_meta(src_project.id)
     src_project_meta = sly.ProjectMeta.from_json(src_project_meta_json)
@@ -36,7 +36,7 @@ def do(**kwargs):
         new_classes_lst.append(cls.clone())
     dst_classes = sly.ObjClassCollection(new_classes_lst)
     if find_anyshape is False:
-        raise RuntimeError("Project doesn't have classes with shape Any")
+        raise Exception("Project {!r} doesn't have classes with shape \"Any\"".format(src_project.name))
 
     # create destination project
     DST_PROJECT_NAME = "{} (without AnyShape)".format(src_project.name)

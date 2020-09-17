@@ -8,6 +8,7 @@ WORKSPACE_ID = int(os.environ['context.workspaceId'])
 PROJECT_ID = int(os.environ['modal.state.slyProjectId'])
 REMOVE_ORIGINAL_CLASS = bool(os.environ['modal.state.remove'])
 
+_SUFFIX = "(without AnyShape)"
 
 @my_app.callback("do")
 @sly.timeit
@@ -39,10 +40,8 @@ def do(**kwargs):
         raise Exception("Project {!r} doesn't have classes with shape \"Any\"".format(src_project.name))
 
     # create destination project
-    DST_PROJECT_NAME = "{} (without AnyShape)".format(src_project.name)
-
-    dst_project = api.project.create(WORKSPACE_ID, DST_PROJECT_NAME, description="without AnyShape",
-                                     change_name_if_conflict=True)
+    dst_name = src_project.name if _SUFFIX in src_project.name else src_project.name + _SUFFIX
+    dst_project = api.project.create(WORKSPACE_ID, dst_name, description=_SUFFIX, change_name_if_conflict=True)
     sly.logger.info('Destination project is created.',
                     extra={'project_id': dst_project.id, 'project_name': dst_project.name})
 
@@ -70,7 +69,7 @@ def do(**kwargs):
                 new_labels.append(lbl.clone(obj_class=new_class))
             else:
                 new_labels.append(lbl)
-        return src_ann.clone(labels=new_labels)
+        return src_ann.clone(labels=new_labels), dst_project_meta
 
     for ds_info in api.dataset.get_list(src_project.id):
         ds_progress = sly.Progress('Processing dataset: {!r}/{!r}'.format(src_project.name, ds_info.name),
@@ -84,7 +83,10 @@ def do(**kwargs):
             ann_infos = api.annotation.download_batch(ds_info.id, img_ids)
             anns = [sly.Annotation.from_json(x.annotation, src_project_meta) for x in ann_infos]
 
-            new_anns = [convert_annotation(ann, dst_project_meta) for ann in anns]
+            new_anns = []
+            for ann in anns:
+                new_ann, dst_project_meta = convert_annotation(ann, dst_project_meta)
+                new_anns.append(new_ann)
 
             new_img_infos = api.image.upload_ids(dst_dataset.id, img_names, img_ids, metas=img_metas)
             new_img_ids = [x.id for x in new_img_infos]

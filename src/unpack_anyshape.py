@@ -72,8 +72,7 @@ def do(**kwargs):
         return src_ann.clone(labels=new_labels), dst_project_meta
 
     for ds_info in api.dataset.get_list(src_project.id):
-        ds_progress = sly.Progress('Processing dataset: {!r}/{!r}'.format(src_project.name, ds_info.name),
-                                   total_cnt=ds_info.images_count)
+        ds_progress = sly.Progress('Dataset: {!r}'.format(ds_info.name), total_cnt=ds_info.images_count)
         dst_dataset = api.dataset.create(dst_project.id, ds_info.name)
         img_infos_all = api.image.get_list(ds_info.id)
 

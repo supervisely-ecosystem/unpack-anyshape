@@ -14,9 +14,7 @@ _SUFFIX = "(without AnyShape)"
 def do(**kwargs):
     api = sly.Api.from_env()
 
-    # read source project
     src_project = api.project.get_info_by_id(PROJECT_ID)
-
     if src_project.type != str(sly.ProjectType.IMAGES):
         raise Exception("Project {!r} has type {!r}. App works only with type {!r}"
                         .format(src_project.name, src_project.type, sly.ProjectType.IMAGES))
@@ -28,7 +26,6 @@ def do(**kwargs):
     find_anyshape = False
     new_classes_lst = []
     for cls in src_project_meta.obj_classes:
-        cls: sly.ObjClass
         if cls.geometry_type == sly.AnyGeometry:
             find_anyshape = True
             continue

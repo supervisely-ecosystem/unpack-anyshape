@@ -2,9 +2,9 @@
   "name": "Unpack AnyShape Classes",
   "type": "app",
   "categories": [
-    "converter"
+    "transform"
   ],
-  "description": "Convert \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
+  "description": "Split \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
   "docker_image": "docker.deepsystems.io/supervisely/five/base-py-sdk-internal:apps",
   "main_script": "src/unpack_anyshape.py",
   "modal_template": "src/modal.html",
@@ -13,12 +13,11 @@
   },
   "task_location": "workspace_tasks",
   "isolate": true,
-  "icon": "https://img.icons8.com/nolan/96/separate-document.png",
+  "icon": "https://img.icons8.com/color/96/000000/output.png",
   "icon_background": "#FFFFFF",
-  "icon_cover": false,
   "headless": true,
   "context_menu": {
     "target": ["images_project"],
-    "context_category": "Converter"
+    "context_category": "Transform"
   }
 }

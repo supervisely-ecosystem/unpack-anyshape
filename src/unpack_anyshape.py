@@ -6,7 +6,6 @@ my_app = sly.AppService()
 task_id = os.environ["TASK_ID"]
 WORKSPACE_ID = int(os.environ['context.workspaceId'])
 PROJECT_ID = int(os.environ['modal.state.slyProjectId'])
-REMOVE_ORIGINAL_CLASS = bool(os.environ['modal.state.remove'])
 
 _SUFFIX = "(without AnyShape)"
 
@@ -32,8 +31,7 @@ def do(**kwargs):
         cls: sly.ObjClass
         if cls.geometry_type == sly.AnyGeometry:
             find_anyshape = True
-            if REMOVE_ORIGINAL_CLASS is True:
-                continue
+            continue
         new_classes_lst.append(cls.clone())
     dst_classes = sly.ObjClassCollection(new_classes_lst)
     if find_anyshape is False:
@@ -64,8 +62,6 @@ def do(**kwargs):
                     dst_project_meta = dst_project_meta.add_obj_class(new_class)
                     api.project.update_meta(dst_project.id, dst_project_meta.to_json())
 
-                if REMOVE_ORIGINAL_CLASS is False:
-                    new_labels.append(lbl)
                 new_labels.append(lbl.clone(obj_class=new_class))
             else:
                 new_labels.append(lbl)
@@ -94,10 +90,11 @@ def do(**kwargs):
             ds_progress.iters_done_report(len(img_infos))
 
     api.task.set_output_project(task_id, dst_project.id, dst_project.name)
+    my_app.stop()
 
 
 def main():
-    my_app.run(initial_events=[{"command": "do"}, {"command": "stop"}])
+    my_app.run(initial_events=[{"command": "do"}])
     my_app.wait_all()
 
 

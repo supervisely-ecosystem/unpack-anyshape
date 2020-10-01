@@ -1,24 +1,14 @@
 <div>
-    <b>Brief overview:</b>
+    <b>Overview:</b>
     <ul>
         <li>Result project name = original name + "(without AnyShape)" suffix</li>
-        <li>Your data is safe: app creates new project with modified classes and objects. The original project will
-            remain unchanged
+        <li>Your data is safe: app creates new project with modified classes and objects. The original project
+            remains unchanged
         </li>
         <li>All "AnyShape" classes will be unpacked to equivalent classes with strictly defined shapes. For examples: if
             you have class "Person" (AnyShape) and you labeled objects with both polygonal and brush tools, this class
             will be unpacked to two classes: "Person_polygon" and "Person_bitmap"
         </li>
         <li>Colors of new classes will be generated randomly</li>
-        <li>Optional: by default app removes original class, because all objects will be duplicated and associated
-            with new corresponding classes
-        </li>
-
     </ul>
-
-    <sly-field title="Action with original class"
-               description='Choose what to do with original class after unpacking'>
-        <el-checkbox v-model="state.remove">Remove "AnyShape" classes</el-checkbox>
-    </sly-field>
-
 </div>

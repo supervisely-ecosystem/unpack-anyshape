@@ -55,13 +55,6 @@ Go to "Context Menu" (images project or dataset) -> "Run App" -> "Transform" -> 
 
 <img src="https://i.imgur.com/r8AlpZC.png" width="600"/>
 
-### Step 2: Configure running settings
-
-Choose the percentage of images that should be randomly sampled. By default all images will be used. And then press "Run" button. In advanced settings you can change agent that will host the app and change version (latest available version is used by default).
-
-<img src="https://i.imgur.com/lI6jenf.png" width="400"/>
-
-
 ### Step 3:  Open app
 
 Once app is started, new task appear in workspace tasks. Monitor progress from both "Tasks" list and from application page. To open report in a new tab click "Open" button. 

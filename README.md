@@ -6,7 +6,7 @@
   
 <p align="center">
 
-  <a href="#overview">Overview</a> •
+  <a href="#Overview">Overview</a> •
   <a href="#How-To-Run">How To Run</a> •
   <a href="#Explanation">Explanation</a>
 </p>
@@ -32,11 +32,18 @@ Supervisely supports the following shapes:
 - Keypoints (graphs) - sets of vertices connected by edges
 - AnyShape (will be explained below)
 
-For example, objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, objects always are saved as masks (raster).
+For example, objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, objects always are saved as masks (raster). 
 
 ### What is AnyShape class? 
 
-Let's concider the following case: semantic segmentation of cars. You want to label cars with SmartTool ()
+Let's concider the following case: semantic segmentation of cars. In most cases you would like to label cars faster with SmartTool (NN that integrated to labeling interface and produces masks). If SmartTool produces inaccurate predictions you will label objects manually with Polygonal tool. So, you want to label objects of class **car** with absolutely different instruments: polygonal tool (vector) and SmartTool (raster). How to do it?
+
+**First option**: Create two separate classes: **car_bitmap** with shape **Bitmap** and **car_polygon** with shape **Polygon**. Thus SmartTool objects will have class **car_bitmap** and polygonal objects will have class **car_polygon**. The main drawback: this approach doubles up the number of classes and later (before NN training) you have to merge class pairs to a single one anyway. And what if you have tens or even hundreds of classes?
+
+**Second option**: Create class **car** with shape **AnyShape**. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well (for example, you expect polygons bug get rectangles ¯\_(ツ)_/¯).
+
+
+
 
 
 

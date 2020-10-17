@@ -44,10 +44,6 @@ Let's concider the following case: semantic segmentation of cars. You would like
 
 **Second option**: Create class **car** with shape **AnyShape**. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well. For example, if labelers are not restricted to specific instrument, you expect polygons but they label objects with rectangles. `¯\_(ツ)_/¯`
 
-### What does this app do?
-
-It splits all "AnyShape" classes to classes with strictly defined shapes (polygon, bitmap, ...). In our example the class **car** will be splited to classes **car_polygon**, **car_bitmap**, etc ...
-
 
 ## How To Run
 
@@ -57,62 +53,20 @@ Go to "Context Menu" (images project or dataset) -> "Run App" -> "Transform" -> 
 
 <img src="https://i.imgur.com/r8AlpZC.png" width="600"/>
 
-### Step 3:  Open app
+### Step 2:  Wait while task is finished
 
 Once app is started, new task appear in workspace tasks. Monitor progress from both "Tasks" list and from application page. To open report in a new tab click "Open" button. 
 
-<img src="https://i.imgur.com/WW4Kacc.png"/>
+<img src="https://i.imgur.com/5rLIgIS.png"/>
 
-App saves resulting report to "Files": `/reports/classes_stats/{USER_LOGIN}/{WORKSPACE_NAME}/{PROJECT_NAME}.lnk`. To open report file in future use "Right mouse click" -> "Open".
+App creates new project with name = original name + "(without AnyShape)" suffix.
 
 ## Explanation
 
-### Per Image Stats
-<img src="https://i.imgur.com/9Hl78Lg.png"/>
+- Result project name = original name + "(without AnyShape)" suffix
 
-Columns:
-* `IMAGE ID` - image id in Supervisely Instance
-* `IMAGE` - image name with direct link to annotation tool. You can use table to find some anomalies or edge cases in your data by sorting different columns and then quickly open images with annotations to investigate deeper. 
-* `HEIGHT`, `WIDTH` - image resolution in pixels
-* `CHANNELS` - number of image channels
-* `UNLABELED` - percentage of pixels (image area)
+- Your data is safe: app creates new project with modified classes and objects. The original project remains unchanged
 
-Columns for every class:
-* <img src="https://i.imgur.com/tyDf3qi.png" width="100"/> - class area (%)
-* <img src="https://i.imgur.com/1EquheL.png" width="100"/> - number of objects of a given class (%)
+- All "AnyShape" classes will be unpacked to equivalent classes with strictly defined shapes. In our example the class **car** will be splited to classes **car_polygon**, **car_bitmap**, etc ... 
 
-### Per Class Stats
-
-<img src="https://i.imgur.com/ztE4BCG.png"/>
-
-* `CLASS NAME`
-* `IMAGES COUNT` - total number of images that have at least one object of a given class
-* `OBJECTS COUNT` - total number of objects of a given class
-* `AVG CLASS AREA PER IMAGE (%)` -
-
-```
-              the sum of a class area on all images               
- -------------------------------------------------------------- 
- the number of images with at least one object of a given class 
-```
- 
-* `AVG OBJECTS COUNT PER IMAGE (%)` - 
-```
-              total number of class objects               
- -------------------------------------------------------------- 
- the number of images with at least one object of a given class 
-```
-
-### Histogram: AVG AREA / AVG OBJECTS COUNT
-
-<img src="https://i.imgur.com/6LXoXHH.png"/>
-
-Histogram view for two metrics from previous chapter: `AVG CLASS AREA PER IMAGE (%)` and `AVG OBJECTS COUNT PER IMAGE (%)`
-
-### Images Count With / Without Class
-
-<img src="https://i.imgur.com/veerIHk.png"/>
-
-### TOP-10 Image Resolutions
-
-<img src="https://i.imgur.com/UwrkTBf.png"/>
+- Colors of new classes will be generated randomly

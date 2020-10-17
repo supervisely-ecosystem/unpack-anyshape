@@ -53,13 +53,11 @@ Go to "Context Menu" (images project or dataset) -> "Run App" -> "Transform" -> 
 
 <img src="https://i.imgur.com/r8AlpZC.png" width="600"/>
 
-### Step 2:  Wait while task is finished
+### Step 2:  Waiting until the task finishes
 
-Once app is started, new task appear in workspace tasks. Monitor progress from both "Tasks" list and from application page. To open report in a new tab click "Open" button. 
+Once app is started, new task appear in workspace tasks. Monitor progress from both "Tasks" list. App creates new project with name = original name + "(without AnyShape)" suffix.
 
-<img src="https://i.imgur.com/5rLIgIS.png"/>
-
-App creates new project with name = original name + "(without AnyShape)" suffix.
+<img src="https://i.imgur.com/JqHh9pZ.png"/>
 
 ## Explanation
 

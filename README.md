@@ -65,6 +65,6 @@ Once app is started, new task appear in workspace tasks. Monitor progress from b
 
 - Your data is safe: app creates new project with modified classes and objects. The original project remains unchanged
 
-- All "AnyShape" classes will be unpacked to equivalent classes with strictly defined shapes. In our example the class **car** will be splited to classes **car_polygon**, **car_bitmap**, etc ... 
+- All "AnyShape" classes will be unpacked to equivalent classes with strictly defined shapes. In our example the class **car** will be splited to classes **car_polygon**, **car_bitmap**, **car_rectangle**. 
 
 - Colors of new classes will be generated randomly

@@ -38,7 +38,7 @@ Example: objects of class **Bitmap** can be labeled with the following instrumen
 
 ### What is AnyShape class? 
 
-Let's concider the following case: semantic segmentation of cars. In most cases you would like to label cars faster with SmartTool (NN that integrated to labeling interface and produces masks). If SmartTool produces inaccurate predictions you will label objects manually with Polygonal tool. So, you want to label objects of class **car** with absolutely different instruments: Polygonal tool (vector) and SmartTool (raster). How to do it?
+Let's concider the following case: semantic segmentation of cars. You would like to label cars faster with SmartTool (NN that integrated to labeling interface and produces masks). If SmartTool produces inaccurate predictions you will label objects manually with Polygonal tool. So, you want to label objects of class **car** with absolutely different instruments: Polygonal tool (vector) and SmartTool (raster). How to do it?
 
 **First option**: Create two separate classes: **car_bitmap** with shape **Bitmap** and **car_polygon** with shape **Polygon**. Thus SmartTool objects will be of class **car_bitmap** and polygonal objects will be of class **car_polygon**. The main drawback: this approach doubles up the number of classes and later (before NN training) you have to merge class pairs to a single one anyway. And what if you have tens or even hundreds of classes?
 

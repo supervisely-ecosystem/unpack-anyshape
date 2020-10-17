@@ -51,7 +51,7 @@ It splits all "AnyShape" classes to classes with strictly defined shapes (polygo
 
 ### Step 1: Run from context menu of project / dataset
 
-Go to "Context Menu" (images project or dataset) -> "Run App" -> "Unpack anyshape"
+Go to "Context Menu" (images project or dataset) -> "Run App" -> "Transform" -> "Unpack AnyShape Classes"
 
 <img src="https://i.imgur.com/r8AlpZC.png" width="600"/>
 

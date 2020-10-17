@@ -23,7 +23,24 @@
 
 In Supervisely, you have to define classes before labeling. The shape of class specifies instruments that are available in annotation interface. For example, if you need to label cars with polygonal tool, you have to create class **Car** with shape **Polygon**.
 
+Supervisely supports the following shapes:
+- Rectangle
+- Polygon
+- Bitmap
+- Line (polyline)
+- Point
+- Keypoints (graphs) - sets of vertices connected by edges
+- AnyShape (will be explained below)
 
+For example, objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, objects always are saved as masks (raster).
+
+### What is AnyShape class? 
+
+Let's concider the following case: semantic segmentation of cars. You want to label cars with SmartTool ()
+
+
+
+And you want to use both polygons Supervisely SmartTool 
 
 
 

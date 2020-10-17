@@ -32,7 +32,7 @@ Supervisely supports the following shapes:
 - Keypoints (graphs) - sets of vertices connected by edges
 - AnyShape (will be explained below)
 
-For example, objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, objects always are saved as masks (raster). 
+Example: objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, these objects always are saved as masks (raster). 
 
 ### What is AnyShape class? 
 

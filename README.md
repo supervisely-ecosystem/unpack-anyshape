@@ -40,7 +40,7 @@ Let's concider the following case: semantic segmentation of cars. In most cases 
 
 **First option**: Create two separate classes: **car_bitmap** with shape **Bitmap** and **car_polygon** with shape **Polygon**. Thus SmartTool objects will have class **car_bitmap** and polygonal objects will have class **car_polygon**. The main drawback: this approach doubles up the number of classes and later (before NN training) you have to merge class pairs to a single one anyway. And what if you have tens or even hundreds of classes?
 
-**Second option**: Create class **car** with shape **AnyShape**. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well: for example you expect polygons but they use rectangles ¯\_(ツ)_/¯.
+**Second option**: Create class **car** with shape **AnyShape**. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well: for example you expect polygons but they use rectangles `¯\_(ツ)_/¯`.
 
 ### What is AnyShape class?
 

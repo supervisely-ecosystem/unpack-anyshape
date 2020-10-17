@@ -30,7 +30,9 @@ Supervisely supports the following shapes:
 - Line (polyline)
 - Point
 - Keypoints (graphs) - sets of vertices connected by edges
+- Cuboids (2D and 3D)
 - AnyShape (will be explained below)
+- ...
 
 Example: objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, these objects always are saved as masks (raster). 
 

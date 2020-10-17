@@ -21,6 +21,14 @@
 
 ## Overview 
 
+In Supervisely, you have to define classes before labeling. The shape of class specifies instruments that are available in annotation interface. For example, if you need to label cars with polygonal tool, you have to create class **Car** with shape **Polygon**.
+
+
+
+
+
+Supervisely supports different classes shapes: Rectangle, Polygon, Bitmap,  
+
 Data Exploration for Segmentation and Detection tasks is underestimated by many researchers. The accuracy of your models highly depends on how good you understand data. 
 
 This app **"Classes Stats for Images"** generates report with detailed general and per image statistics for all classes in images project. It allows to see big picture as well as shed light on hidden patterns and edge cases (see <a href="#how-to-use">How to use</a> section).

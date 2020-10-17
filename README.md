@@ -42,21 +42,9 @@ Let's concider the following case: semantic segmentation of cars. In most cases 
 
 **Second option**: Create class **car** with shape **AnyShape**. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well: for example you expect polygons but they use rectangles `¯\_(ツ)_/¯`.
 
-### What is AnyShape class?
+### What does this app do?
 
-
-
-
-
-And you want to use both polygons Supervisely SmartTool 
-
-
-
-Supervisely supports different classes shapes: Rectangle, Polygon, Bitmap,  
-
-Data Exploration for Segmentation and Detection tasks is underestimated by many researchers. The accuracy of your models highly depends on how good you understand data. 
-
-This app **"Classes Stats for Images"** generates report with detailed general and per image statistics for all classes in images project. It allows to see big picture as well as shed light on hidden patterns and edge cases (see <a href="#how-to-use">How to use</a> section).
+It splits all "AnyShape" classes to classes with strictly defined shapes (polygon, bitmap, ...). In our example the class **car** will be splited to classes **car_polygon**, **car_bitmap**, etc ...
 
 
 ## How To Run

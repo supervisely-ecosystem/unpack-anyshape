@@ -6,7 +6,7 @@
   
 <p align="center">
 
-  <a href="#overview">Overview</a> •
+  <a href="#Overview">Overview</a> •
   <a href="#How-To-Run">How To Run</a> •
   <a href="#Explanation">Explanation</a>
 </p>
@@ -21,82 +21,50 @@
 
 ## Overview 
 
-Data Exploration for Segmentation and Detection tasks is underestimated by many researchers. The accuracy of your models highly depends on how good you understand data. 
+In Supervisely, you have to define classes before labeling. The shape of class specifies instruments that are available in annotation interface. For example, if you need to label cars with polygonal tool, you have to create class **Car** with shape **Polygon**.
 
-This app **"Classes Stats for Images"** generates report with detailed general and per image statistics for all classes in images project. It allows to see big picture as well as shed light on hidden patterns and edge cases (see <a href="#how-to-use">How to use</a> section).
+Supervisely supports the following shapes:
+- Rectangle
+- Polygon
+- Bitmap
+- Line (polyline)
+- Point
+- Keypoints (graphs) - sets of vertices connected by edges
+- Cuboids (2D and 3D)
+- AnyShape (will be explained below)
+- ...
+
+Example: objects of class **Bitmap** can be labeled with the following instruments: brush + eraser, pen, polygon, SmartTool. Whatever instrument is used, these objects always are saved as masks (raster). 
+
+### What is AnyShape class? 
+
+Let's concider the following case: semantic segmentation of cars. You would like to label cars faster with SmartTool (NN that integrated to labeling interface and produces masks). If SmartTool produces inaccurate predictions you will label objects manually with Polygonal tool. So, you want to label objects of class **car** with absolutely different instruments: Polygonal tool (vector) and SmartTool (raster). How to do it?
+
+**First option**: Create two separate classes: **car_bitmap** with shape **Bitmap** and **car_polygon** with shape **Polygon**. Thus SmartTool objects will be of class **car_bitmap** and polygonal objects will be of class **car_polygon**. The main drawback: this approach doubles up the number of classes and later (before NN training) you have to merge class pairs to a single one anyway. And what if you have tens or even hundreds of classes?
+
+**Second option**: Create class **car** with shape **AnyShape**. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well. For example, if labelers are not restricted to specific instrument, you expect polygons but they label objects with rectangles. `¯\_(ツ)_/¯`
 
 
 ## How To Run
 
 ### Step 1: Run from context menu of project / dataset
 
-Go to "Context Menu" (images project or dataset) -> "Report" -> "Classes stats for images"
+Go to "Context Menu" (images project or dataset) -> "Run App" -> "Transform" -> "Unpack AnyShape Classes"
 
-<img src="https://i.imgur.com/dGGzVsm.png" width="600"/>
+<img src="https://i.imgur.com/r8AlpZC.png" width="600"/>
 
-### Step 2: Configure running settings
+### Step 2:  Waiting until the task finishes
 
-Choose the percentage of images that should be randomly sampled. By default all images will be used. And then press "Run" button. In advanced settings you can change agent that will host the app and change version (latest available version is used by default).
+Once app is started, new task appear in workspace tasks. Monitor progress from "Tasks" list.
 
-<img src="https://i.imgur.com/lI6jenf.png" width="400"/>
-
-
-### Step 3:  Open app
-
-Once app is started, new task appear in workspace tasks. Monitor progress from both "Tasks" list and from application page. To open report in a new tab click "Open" button. 
-
-<img src="https://i.imgur.com/WW4Kacc.png"/>
-
-App saves resulting report to "Files": `/reports/classes_stats/{USER_LOGIN}/{WORKSPACE_NAME}/{PROJECT_NAME}.lnk`. To open report file in future use "Right mouse click" -> "Open".
+<img src="https://i.imgur.com/JqHh9pZ.png"/>
 
 ## Explanation
 
-### Per Image Stats
-<img src="https://i.imgur.com/9Hl78Lg.png"/>
+- Result project name = original name + "(without AnyShape)" suffix
 
-Columns:
-* `IMAGE ID` - image id in Supervisely Instance
-* `IMAGE` - image name with direct link to annotation tool. You can use table to find some anomalies or edge cases in your data by sorting different columns and then quickly open images with annotations to investigate deeper. 
-* `HEIGHT`, `WIDTH` - image resolution in pixels
-* `CHANNELS` - number of image channels
-* `UNLABELED` - percentage of pixels (image area)
+- Your data is safe: app creates new project with modified classes and objects. The original project remains unchanged
 
-Columns for every class:
-* <img src="https://i.imgur.com/tyDf3qi.png" width="100"/> - class area (%)
-* <img src="https://i.imgur.com/1EquheL.png" width="100"/> - number of objects of a given class (%)
+- All "AnyShape" classes will be unpacked to equivalent classes with strictly defined shapes. In our example the class **car** will be splited to classes **car_polygon**, **car_bitmap**, **car_rectangle**. 
 
-### Per Class Stats
-
-<img src="https://i.imgur.com/ztE4BCG.png"/>
-
-* `CLASS NAME`
-* `IMAGES COUNT` - total number of images that have at least one object of a given class
-* `OBJECTS COUNT` - total number of objects of a given class
-* `AVG CLASS AREA PER IMAGE (%)` -
-
-```
-              the sum of a class area on all images               
- -------------------------------------------------------------- 
- the number of images with at least one object of a given class 
-```
- 
-* `AVG OBJECTS COUNT PER IMAGE (%)` - 
-```
-              total number of class objects               
- -------------------------------------------------------------- 
- the number of images with at least one object of a given class 
-```
-
-### Histogram: AVG AREA / AVG OBJECTS COUNT
-
-<img src="https://i.imgur.com/6LXoXHH.png"/>
-
-Histogram view for two metrics from previous chapter: `AVG CLASS AREA PER IMAGE (%)` and `AVG OBJECTS COUNT PER IMAGE (%)`
-
-### Images Count With / Without Class
-
-<img src="https://i.imgur.com/veerIHk.png"/>
-
-### TOP-10 Image Resolutions
-
-<img src="https://i.imgur.com/UwrkTBf.png"/>
+- Colors of new classes will be generated randomly

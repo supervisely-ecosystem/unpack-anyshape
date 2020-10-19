@@ -92,7 +92,6 @@ def do(**kwargs):
 
 def main():
     my_app.run(initial_events=[{"command": "do"}])
-    my_app.wait_all()
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
   "name": "Unpack AnyShape Classes",
   "type": "app",
   "categories": [
+    "project classes",
     "transform"
   ],
   "description": "Split \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",

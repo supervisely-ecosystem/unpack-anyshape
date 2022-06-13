@@ -2,8 +2,8 @@
   "name": "Unpack AnyShape Classes",
   "type": "app",
   "categories": [
-    "project classes",
-    "transform"
+    "images",
+    "annotation transformation"
   ],
   "description": "Split \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
   "docker_image": "supervisely/base-py-sdk:6",

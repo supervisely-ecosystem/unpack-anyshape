@@ -1,6 +1,6 @@
 <div align="center" markdown> 
 
-<img src="https://i.imgur.com/TgYa3ln.png"/>
+<img src="media/poster.png"/>
 
 # Unpack AnyShape Classes
   
@@ -41,7 +41,7 @@ Let's concider the following case: semantic segmentation of cars. You would like
 
 **First option**: Create two separate classes: `car_bitmap` with shape `Bitmap` and `car_polygon` with shape `Polygon`. Thus SmartTool objects will be of class `car_bitmap` and polygonal objects will be of class `car_polygon`. The main drawback: this approach doubles up the number of classes and later (before NN training) you have to merge class pairs to a single one anyway. And what if you have tens or even hundreds of classes?
 
-**Second option**: Create class `car` with shape `AnyShape`. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well. For example, if labelers are not restricted to specific instrument, you expect polygons but they can label objects with rectangles. `¯\_(ツ)_/¯`
+**Second option**: Create class `car` with shape `AnyShape`. It means that you can use all annotation instruments to label objects. The main drawback: your labeling team have to understand annotation requirements well. For example, if labelers are not restricted to specific instrument, you expect polygons but they can label objects with rectangles.
 
 
 ## How To Run
@@ -50,13 +50,13 @@ Let's concider the following case: semantic segmentation of cars. You would like
 
 Go to "Context Menu" (images project or dataset) -> "Run App" -> "Transform" -> "Unpack AnyShape Classes"
 
-<img src="https://i.imgur.com/r8AlpZC.png" width="600"/>
+<img src="media/htr1.png" width="600"/>
 
 ### Step 2:  Waiting until the task finishes
 
 Once app is started, new task appear in workspace tasks. Monitor progress from "Tasks" list.
 
-<img src="https://i.imgur.com/JqHh9pZ.png"/>
+<img src="media/htr2.png"/>
 
 ## Explanation
 

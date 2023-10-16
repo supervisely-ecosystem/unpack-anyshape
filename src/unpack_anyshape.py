@@ -1,5 +1,5 @@
 import os
-import supervisely_lib as sly
+import supervisely as sly
 
 my_app = sly.AppService()
 
@@ -32,61 +32,62 @@ def do(**kwargs):
         new_classes_lst.append(cls.clone())
     dst_classes = sly.ObjClassCollection(new_classes_lst)
     if find_anyshape is False:
-        raise Exception("Project {!r} doesn't have classes with shape \"Any\"".format(src_project.name))
+        sly.logger.error("Project {!r} doesn't have classes with shape \"Any\"".format(src_project.name))
+    else:
 
-    # create destination project
-    dst_name = src_project.name if _SUFFIX in src_project.name else src_project.name + _SUFFIX
-    dst_project = api.project.create(WORKSPACE_ID, dst_name, description=_SUFFIX, change_name_if_conflict=True)
-    sly.logger.info('Destination project is created.',
-                    extra={'project_id': dst_project.id, 'project_name': dst_project.name})
+        # create destination project
+        dst_name = src_project.name if _SUFFIX in src_project.name else src_project.name + _SUFFIX
+        dst_project = api.project.create(WORKSPACE_ID, dst_name, description=_SUFFIX, change_name_if_conflict=True)
+        sly.logger.info('Destination project is created.',
+                        extra={'project_id': dst_project.id, 'project_name': dst_project.name})
 
-    dst_project_meta = src_project_meta.clone(obj_classes=dst_classes)
-    api.project.update_meta(dst_project.id, dst_project_meta.to_json())
+        dst_project_meta = src_project_meta.clone(obj_classes=dst_classes)
+        api.project.update_meta(dst_project.id, dst_project_meta.to_json())
 
-    def convert_annotation(src_ann, dst_project_meta):
-        new_labels = []
-        for idx, lbl in enumerate(src_ann.labels):
-            lbl: sly.Label
-            if lbl.obj_class.geometry_type == sly.AnyGeometry:
-                actual_geometry = type(lbl.geometry)
+        def convert_annotation(src_ann, dst_project_meta):
+            new_labels = []
+            for idx, lbl in enumerate(src_ann.labels):
+                lbl: sly.Label
+                if lbl.obj_class.geometry_type == sly.AnyGeometry:
+                    actual_geometry = type(lbl.geometry)
 
-                new_class_name = "{}_{}".format(lbl.obj_class.name, actual_geometry.geometry_name())
-                new_class = dst_project_meta.get_obj_class(new_class_name)
-                if new_class is None:
-                    new_class = sly.ObjClass(name=new_class_name,
-                                             geometry_type=actual_geometry,
-                                             color=sly.color.random_rgb())
-                    dst_project_meta = dst_project_meta.add_obj_class(new_class)
-                    api.project.update_meta(dst_project.id, dst_project_meta.to_json())
+                    new_class_name = "{}_{}".format(lbl.obj_class.name, actual_geometry.geometry_name())
+                    new_class = dst_project_meta.get_obj_class(new_class_name)
+                    if new_class is None:
+                        new_class = sly.ObjClass(name=new_class_name,
+                                                geometry_type=actual_geometry,
+                                                color=sly.color.random_rgb())
+                        dst_project_meta = dst_project_meta.add_obj_class(new_class)
+                        api.project.update_meta(dst_project.id, dst_project_meta.to_json())
 
-                new_labels.append(lbl.clone(obj_class=new_class))
-            else:
-                new_labels.append(lbl)
-        return src_ann.clone(labels=new_labels), dst_project_meta
+                    new_labels.append(lbl.clone(obj_class=new_class))
+                else:
+                    new_labels.append(lbl)
+            return src_ann.clone(labels=new_labels), dst_project_meta
 
-    for ds_info in api.dataset.get_list(src_project.id):
-        ds_progress = sly.Progress('Dataset: {!r}'.format(ds_info.name), total_cnt=ds_info.images_count)
-        dst_dataset = api.dataset.create(dst_project.id, ds_info.name)
-        img_infos_all = api.image.get_list(ds_info.id)
+        for ds_info in api.dataset.get_list(src_project.id):
+            ds_progress = sly.Progress('Dataset: {!r}'.format(ds_info.name), total_cnt=ds_info.images_count)
+            dst_dataset = api.dataset.create(dst_project.id, ds_info.name)
+            img_infos_all = api.image.get_list(ds_info.id)
 
-        for img_infos in sly.batched(img_infos_all):
-            img_names, img_ids, img_metas = zip(*((x.name, x.id, x.meta) for x in img_infos))
+            for img_infos in sly.batched(img_infos_all):
+                img_names, img_ids, img_metas = zip(*((x.name, x.id, x.meta) for x in img_infos))
 
-            ann_infos = api.annotation.download_batch(ds_info.id, img_ids)
-            anns = [sly.Annotation.from_json(x.annotation, src_project_meta) for x in ann_infos]
+                ann_infos = api.annotation.download_batch(ds_info.id, img_ids)
+                anns = [sly.Annotation.from_json(x.annotation, src_project_meta) for x in ann_infos]
 
-            new_anns = []
-            for ann in anns:
-                new_ann, dst_project_meta = convert_annotation(ann, dst_project_meta)
-                new_anns.append(new_ann)
+                new_anns = []
+                for ann in anns:
+                    new_ann, dst_project_meta = convert_annotation(ann, dst_project_meta)
+                    new_anns.append(new_ann)
 
-            new_img_infos = api.image.upload_ids(dst_dataset.id, img_names, img_ids, metas=img_metas)
-            new_img_ids = [x.id for x in new_img_infos]
-            api.annotation.upload_anns(new_img_ids, new_anns)
+                new_img_infos = api.image.upload_ids(dst_dataset.id, img_names, img_ids, metas=img_metas)
+                new_img_ids = [x.id for x in new_img_infos]
+                api.annotation.upload_anns(new_img_ids, new_anns)
 
-            ds_progress.iters_done_report(len(img_infos))
+                ds_progress.iters_done_report(len(img_infos))
 
-    api.task.set_output_project(task_id, dst_project.id, dst_project.name)
+        api.task.set_output_project(task_id, dst_project.id, dst_project.name)
     my_app.stop()
 
 

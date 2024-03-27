@@ -1,29 +1,29 @@
 {
-    "name": "Unpack AnyShape Classes",
-    "type": "app",
-    "categories": [
-        "images",
-        "annotation transformation",
-        "data operations"
+  "name": "Unpack AnyShape Classes",
+  "type": "app",
+  "categories": [
+    "images",
+    "annotation transformation",
+    "data operations"
+  ],
+  "description": "Split \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
+  "docker_image": "supervisely/data-operations:6.73.60",
+  "min_instance_version": "6.9.5",
+  "main_script": "src/unpack_anyshape.py",
+  "modal_template": "src/modal.html",
+  "modal_template_state": {
+    "remove": true
+  },
+  "task_location": "workspace_tasks",
+  "isolate": true,
+  "icon": "https://img.icons8.com/color/96/000000/output.png",
+  "icon_background": "#FFFFFF",
+  "headless": true,
+  "context_menu": {
+    "target": [
+      "images_project"
     ],
-    "description": "Split \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
-    "docker_image": "supervisely/data-operations:6.72.227",
-    "min_instance_version": "6.8.48",
-    "main_script": "src/unpack_anyshape.py",
-    "modal_template": "src/modal.html",
-    "modal_template_state": {
-        "remove": true
-    },
-    "task_location": "workspace_tasks",
-    "isolate": true,
-    "icon": "https://img.icons8.com/color/96/000000/output.png",
-    "icon_background": "#FFFFFF",
-    "headless": true,
-    "context_menu": {
-        "target": [
-            "images_project"
-        ],
-        "context_category": "Transform"
-    },
-    "poster": "https://i.imgur.com/TgYa3ln.png"
+    "context_category": "Transform"
+  },
+  "poster": "https://i.imgur.com/TgYa3ln.png"
 }

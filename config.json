@@ -7,8 +7,8 @@
     "data operations"
   ],
   "description": "Split \"AnyShape\" classes to classes with strictly defined shapes (polygon, bitmap, ...)",
-  "docker_image": "supervisely/data-operations:6.73.60",
-  "min_instance_version": "6.9.5",
+  "docker_image": "supervisely/data-operations:6.73.564",
+  "instance_version": "6.15.60",
   "main_script": "src/unpack_anyshape.py",
   "modal_template": "src/modal.html",
   "modal_template_state": {
